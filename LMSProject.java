@@ -23,7 +23,7 @@ class LMSProject extends Frame
 
         label = new JLabel();
         label.setText("If you are new student you must create your account before login\n else click on Login Button");
-        label.setForeground(Color.WHITE);
+        label.setForeground(Color.BLACK);
         label.setBounds(475,425,500,100);
         label.setFont(new Font("Aerial",Font.BOLD,14));
         label.setLayout(null);
@@ -57,7 +57,7 @@ class LMSProject extends Frame
         bA.setBackground(Color.WHITE);
         bL.setBackground(Color.WHITE);
 
-        l1.setForeground(Color.WHITE);
+        l1.setForeground(Color.BLACK);
         l1.setFont(new Font("Serif",Font.BOLD + Font.PLAIN,50));
         bA.setFont(new Font("Aerial",Font.BOLD,17));
         bL.setFont(new Font("Aerial",Font.BOLD,17));
@@ -96,8 +96,8 @@ class LMSProject extends Frame
 
             if(ae.getSource()==bA)
             {
-                //currentFrame.setVisible(false);
-                //new AccountFrame();
+                currentFrame.setVisible(false);
+                new CreateAccountFrame();
             }
             else if(ae.getSource() == bL)
             {
@@ -106,4 +106,10 @@ class LMSProject extends Frame
             }
         }
     }
+
+    public static void main(String args[])
+    {
+        new LMSProject();
+    }
 }
+
