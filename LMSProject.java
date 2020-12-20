@@ -57,7 +57,7 @@ class LMSProject extends Frame
         bA.setBackground(Color.WHITE);
         bL.setBackground(Color.WHITE);
 
-        l1.setForeground(Color.WHITE);
+        l1.setForeground(Color.BLACK);
         l1.setFont(new Font("Serif",Font.BOLD + Font.PLAIN,50));
         bA.setFont(new Font("Aerial",Font.BOLD,17));
         bL.setFont(new Font("Aerial",Font.BOLD,17));
@@ -86,7 +86,7 @@ class LMSProject extends Frame
         setSize(1350,850);
         setVisible(true);
 
-        // addWindowListener(new MyWindow());
+        addWindowListener(new MyWindow());
     }
 
     private class actions implements ActionListener
@@ -96,8 +96,8 @@ class LMSProject extends Frame
 
             if(ae.getSource()==bA)
             {
-                //currentFrame.setVisible(false);
-                //new AccountFrame();
+                currentFrame.setVisible(false);
+                new CreateAccountFrame();
             }
             else if(ae.getSource() == bL)
             {
