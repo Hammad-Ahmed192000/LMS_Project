@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-class LoginFrame extends JFrame implements ActionListener {
+class StudentLogin extends JFrame implements ActionListener {
 
     Container container = getContentPane();
     JLabel studentLabel = new JLabel("STUDENT NAME");
@@ -17,11 +17,17 @@ class LoginFrame extends JFrame implements ActionListener {
     JButton resetButton = new JButton("RESET");
     JCheckBox showPassword = new JCheckBox("Show Password");
 
-  
 
 
-    LoginFrame() {
+
+    StudentLogin() {
         setLayoutManager();
+        //StudentLogin frame = new StudentLogin();
+        setTitle("Student Login");
+        setVisible(true);
+        setSize(1350,850);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
@@ -66,7 +72,7 @@ class LoginFrame extends JFrame implements ActionListener {
         if (e.getSource() == loginButton) {
             String studentText;
             String pwdText;
-            studentText = userTextField.getText();
+            studentText = studentTextField.getText();
             pwdText = passwordField.getText();
             if (studentText.equalsIgnoreCase("AKRAM") && pwdText.equalsIgnoreCase("12345")) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
@@ -88,18 +94,6 @@ class LoginFrame extends JFrame implements ActionListener {
 
 
         }
-    }
-
-}
-public class StudentLogin {
-    public static void main(String[] a) {
-        LoginFrame frame = new LoginFrame();
-        frame.setTitle("Student Login");
-        frame.setVisible(true);
-        frame.setSize(1350,850);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
     }
 
 }
