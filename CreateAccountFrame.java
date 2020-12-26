@@ -178,10 +178,6 @@ class CreateAccountFrame extends Frame
                     {
                         if((std_name.charAt(i)<='A' && std_name.charAt(i)>='Z') || (std_name.charAt(i)<='a' && std_name.charAt(i) >= 'z'))
                         {
-                            // this exception might have Problem
-                            // the problem is that when we give space between our Full std_name
-                            // This space is also a CHARACTER so, we also add space  character in if() condition
-                            // but this might not working.
                             throw new NameException();
                         }
                     }
@@ -208,11 +204,10 @@ class CreateAccountFrame extends Frame
                     {
                         throw new passwordException();
                     }
-
-                     */
+                    */
                     JOptionPane.showMessageDialog(null , "Next Button reached you to the Menu");
-                    // currentFrame.setVisible(false);
-                    // new showMenu().setVisible(true);
+                    currentFrame.setEnabled(false);
+                    new PasswordSetting().setVisible(true);
                 }
                 catch(Exception e)
                 {
@@ -273,20 +268,20 @@ class CreateAccountFrame extends Frame
                     {
                         Class.forName("com.mysql.jdbc.Driver");
 
-                        // here plms is MYSQL database name, root is username and maadi192000 is password
+                        // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
 
                         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
 
                         /*
                             This code is for Inserting record in MySql DataBase
                         */
-                        String query = "INSERT INTO `library_management_system`.`students` (`account_ID`, `student_name`, `password`, 'reserved_books', 'student_id') VALUES ('" + std_ID + "' , '" + std_name + "' , '" + program + "' , '"+ semester + "', '" + batch + "' );" ;
+                        String query = "INSERT INTO `library_managment_system`.`students` (`account_ID`, `student_name`, `password`, 'reserved_books', 'student_id') VALUES ('" + std_ID + "' , '" + std_name + "' , '" + program + "' , '"+ semester + "', '" + batch + "' );" ;
                         Statement statement = con.createStatement();
 
                         int count = statement.executeUpdate(query);
                         if(count > 0)
                         {
-                            JOptionPane.showMessageDialog(null , "Thanks for creating New Account!!! \n Your account saved in our Database");
+                            JOptionPane.showMessageDialog(null , "Now you Set Your Password that is used for your Login");
                         }
 
                         con.close();
@@ -301,6 +296,8 @@ class CreateAccountFrame extends Frame
                 {
                     JOptionPane.showMessageDialog(null,e);
                 }
+
+                //currentFrame.setVisible(false);
             }
         }
     }

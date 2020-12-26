@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 class StudentLogin extends Frame
 {
@@ -110,8 +111,8 @@ class StudentLogin extends Frame
         {
             if(ae.getSource()==back)
             {
-                // currentFrame.setVisible(false);
-                // new project().setVisible(true);
+                currentFrame.setVisible(false);
+                new LMSProject().setVisible(true);
             }
 
             else if(ae.getSource()==next)
@@ -143,13 +144,50 @@ class StudentLogin extends Frame
                         throw new passwordException();
                     }
 
+                    try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+
+                        // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
+
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
+
+
+                        //    This code is for Inserting record in MySql DataBase
+                        PreparedStatement preparedStatement ;
+                        ResultSet resultSet ;
+
+                        String query = "Select  * from `library_managment_system`.`accounts` WHERE `student_name` = ? AND `password` = ?;" ;
+                        // Statement statement = con.createStatement();
+
+                        preparedStatement = con.prepareStatement(query) ;
+
+                        preparedStatement.setString(1, name);
+                        preparedStatement.setString(2, password);
+
+                        resultSet = preparedStatement.executeQuery();
+
+                        // int count = statement.executeUpdate(query);
+                        if(resultSet.next())
+                        {
+                            JOptionPane.showMessageDialog(null , "Thanks for creating New Account!!! \n Your account saved in our Database");
+                        }
+                        con.close();
+                    }
+
+                    catch(Exception e)
+                    {
+                        JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                    }
+
                     JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
+
                     // currentFrame.setVisible(false);
                     // new showMenu1().setVisible(true);
                 }
                 catch(Exception e)
                 {
-                    JOptionPane.showMessageDialog(null,"This is in Next Button");
+                    JOptionPane.showMessageDialog(null,"There is some Problem With Login");
                 }
             }
 
@@ -182,16 +220,57 @@ class StudentLogin extends Frame
                         throw new passwordException();
                     }
 
-                    JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
-                    // currentFrame.setVisible(false);
-                    // new showMenu1().setVisible(true);
+                    try
+                    {
+                        Class.forName("com.mysql.jdbc.Driver");
+
+                        // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
+
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
+
+
+                        //    This code is for Inserting record in MySql DataBase
+                        PreparedStatement preparedStatement ;
+                        ResultSet resultSet ;
+
+                        String query = "Select  * from `library_managment_system`.`accounts` WHERE `student_name` = ? AND `password` = ?;" ;
+                        // Statement statement = con.createStatement();
+
+                        preparedStatement = con.prepareStatement(query) ;
+
+                        preparedStatement.setString(1, name);
+                        preparedStatement.setString(2, password);
+
+                        resultSet = preparedStatement.executeQuery();
+
+                        // int count = statement.executeUpdate(query);
+                        if(resultSet.next())
+                        {
+                            // All the Next Operation that are after Login we will put Here...
+                            JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
+                            JOptionPane.showMessageDialog(null , "Here We put the code  for Student Profile page ");
+                            // currentFrame.setVisible(false);
+                            // new studentProfile().setVisible(true);
+                        }
+                        con.close();
+                    }
+
+                    catch(Exception e)
+                    {
+                        JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                    }
+
+                    // JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
+
                 }
+
                 catch(Exception e)
                 {
-                    JOptionPane.showMessageDialog(null,"This is in Submit button.");
+                    JOptionPane.showMessageDialog(null,"There is a problem in Login.");
                 }
             }
         }
     }
 }
+
 
