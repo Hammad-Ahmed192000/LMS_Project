@@ -43,7 +43,7 @@ class CreateAccountFrame extends Frame
 
 
         // this code is for setting the BackGround.
-        icon = new ImageIcon("H:\\BS (CS) 3\\OOP Th Dr.Sher\\After_Break_Revised_Course\\OOP Project\\Final Project Code with Packaging\\src\\finalProject\\images\\pic2.jpg") ;
+        icon = new ImageIcon("D:\\BSSE-IV\\DB Theory\\DBProject\\LMSApp (1)\\LMSApp\\src\\finalProject\\back1.jpg") ;
         background = new JLabel(icon) ;
         background.setBounds(0 , 0 , 1350,850);
         background.setVisible(true);
@@ -219,6 +219,7 @@ class CreateAccountFrame extends Frame
             {
                 try
                 {
+                    // bookRecords[index][0] = Integer.toString(rs.getInt(1));
                     std_ID = tf.getText();
                     std_name = tf1.getText();
                     program = tf4.getText();
@@ -264,18 +265,19 @@ class CreateAccountFrame extends Frame
                      */
 
 
+                    
                     try
                     {
                         Class.forName("com.mysql.jdbc.Driver");
 
                         // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
 
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_managment_system","root","maadi192000");
 
-                        /*
-                            This code is for Inserting record in MySql DataBase
-                        */
-                        String query = "INSERT INTO `library_managment_system`.`students` (`account_ID`, `student_name`, `password`, 'reserved_books', 'student_id') VALUES ('" + std_ID + "' , '" + std_name + "' , '" + program + "' , '"+ semester + "', '" + batch + "' );" ;
+
+                        //    This code is for Inserting record in MySql DataBase
+
+                        String query = "INSERT INTO `library_managment_system`.`students` (`student_id`, `student_name`, `program`, `semester`, `batch`) VALUES ('" + Integer.parseInt(std_ID) + "' , '" + std_name + "' , '" + program + "' , '"+ semester + "', '" + batch + "' );" ;
                         Statement statement = con.createStatement();
 
                         int count = statement.executeUpdate(query);
@@ -289,15 +291,25 @@ class CreateAccountFrame extends Frame
                     catch(Exception e)
                     {
                         JOptionPane.showMessageDialog(null , "Still Your account is not saved in our Database");
+                        // JOptionPane.showMessageDialog(null , e.getMessage());
                     }
 
+                    
+
                 }
+
+
                 catch(Exception e)
                 {
                     JOptionPane.showMessageDialog(null,e);
                 }
 
-                //currentFrame.setVisible(false);
+                currentFrame.setVisible(false);
+                try {
+                    new PasswordSetting().setVisible(true);
+                } catch (EmptyFieldsException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

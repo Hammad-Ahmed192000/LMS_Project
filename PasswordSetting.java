@@ -49,6 +49,7 @@ class PasswordSetting  extends JFrame
 
                     try
                     {
+                        
                         std_id = std_id_tf.getText();
                         std_name = std_tf.getText();
                         password = pfPassword.getPassword();
@@ -62,19 +63,19 @@ class PasswordSetting  extends JFrame
                         {
                             throw new passwordException();
                         }
-                        /*
+
                         try
                         {
                             Class.forName("com.mysql.jdbc.Driver");
 
                             // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
 
-                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
+                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_managment_system","root","maadi192000");
 
 
-                        //    This code is for Inserting record in MySql DataBase
+                            //    This code is for Inserting record in MySql DataBase
 
-                            String query = "INSERT INTO `library_managment_system`.`accounts` (`student_name`, `password`, 'student_id') VALUES ('" + std_name  + "' , '" + password + "' , '" + std_id + "');" ;
+                            String query = "INSERT INTO `library_managment_system`.`accounts` (`student_name`, `password`, `student_id`) VALUES ('" + std_name  + "' , '" + password + "' , '" + Integer.parseInt(std_id) + "');" ;
                             Statement statement = con.createStatement();
 
                             int count = statement.executeUpdate(query);
@@ -86,23 +87,26 @@ class PasswordSetting  extends JFrame
                             con.close();
                         }
 
-
                         catch(Exception e)
                         {
-                            JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                            // JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                            JOptionPane.showMessageDialog(null, e.getMessage());
                         }
 
-                         */
-
+                     
 
                         setVisible(false);
-                        new StudentLogin().setVisible(true);
+                        new StudentProfile().setVisible(true);
                     }
                     catch (Exception e)
                     {
-                        JOptionPane.showMessageDialog(null, e);
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
+
+
                 }
+
+
 
             });
 
