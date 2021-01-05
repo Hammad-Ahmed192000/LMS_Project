@@ -11,7 +11,7 @@ class PasswordSetting  extends JFrame
 {
         String std_name;
         String std_id ;
-        char[] password;
+        String password;
         PasswordSetting() throws EmptyFieldsException
         {
             PasswordSetting currentFrame = null;
@@ -47,67 +47,53 @@ class PasswordSetting  extends JFrame
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
 
-                    try
-                    {
-                        
+                    try {
+
                         std_id = std_id_tf.getText();
                         std_name = std_tf.getText();
-                        password = pfPassword.getPassword();
+                        password = new String(pfPassword.getPassword());
 
-                        if(std_name.length() == 0 || password.length==0 || std_id.length()== 0)
-                        {
+                        if (std_name.length() == 0 || password.length() == 0 || std_id.length() == 0) {
                             throw new EmptyFieldsException();
                         }
 
-                        if(password.length < 8)
-                        {
-                            throw new passwordException();
+                        if (password.length() < 8) {
+                                throw new passwordException();
                         }
 
-                        try
-                        {
-                            Class.forName("com.mysql.jdbc.Driver");
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
 
                             // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
 
-                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_managment_system","root","maadi192000");
+                            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_managment_system", "root", "maadi192000");
 
 
                             //    This code is for Inserting record in MySql DataBase
 
-                            String query = "INSERT INTO `library_managment_system`.`accounts` (`student_name`, `password`, `student_id`) VALUES ('" + std_name  + "' , '" + password + "' , '" + Integer.parseInt(std_id) + "');" ;
+                            String query = "INSERT INTO `library_managment_system`.`accounts` (`student_name`, `password`, `student_id`) VALUES ('" + std_name + "' , '" + password + "' , '" + Integer.parseInt(std_id) + "');";
                             Statement statement = con.createStatement();
 
                             int count = statement.executeUpdate(query);
-                            if(count > 0)
-                            {
-                                JOptionPane.showMessageDialog(null , "Thanks for creating New Account!!! \n Your account saved in our Database");
+                            if (count > 0) {
+                                JOptionPane.showMessageDialog(null, "Thanks for creating New Account!!! \n Your account saved in our Database");
+                                JOptionPane.showMessageDialog(null, "Now!!! You Login in your Acccount \n using your Name and Password and Remember Both Things");
+                                dispose();
+                                // new StudentLogin();
                             }
-
                             con.close();
-                        }
-
-                        catch(Exception e)
-                        {
+                        } catch (Exception e) {
                             // JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
                             JOptionPane.showMessageDialog(null, e.getMessage());
                         }
 
-                     
-
-                        setVisible(false);
-                        new StudentProfile().setVisible(true);
-                    }
-                    catch (Exception e)
-                    {
+                        new StudentLogin();
+                        //setVisible(false);
+                        //new StudentProfile().setVisible(true);
+                    } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
                     }
-
-
                 }
-
-
-
             });
 
 
