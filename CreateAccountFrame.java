@@ -29,6 +29,7 @@ class CreateAccountFrame extends Frame
     String std_ID, std_name, program, semester, batch ;
     JLabel background ;
     ImageIcon icon ;
+    boolean emptyFields = true;
 
     public CreateAccountFrame()
     {
@@ -41,30 +42,32 @@ class CreateAccountFrame extends Frame
         semester_label=new JLabel("Current Semester : ",Label.LEFT);
         batch_label=new JLabel("Batch Year :",Label.LEFT);
 
-
+/*
         // this code is for setting the BackGround.
         icon = new ImageIcon("D:\\BSSE-IV\\DB Theory\\DBProject\\LMSApp (1)\\LMSApp\\src\\finalProject\\back1.jpg") ;
         background = new JLabel(icon) ;
         background.setBounds(0 , 0 , 1350,850);
         background.setVisible(true);
 
-        background.add(l1);
-        background.add(separator) ;
-        background.add(std_name_label);
-        background.add(label_Std_ID);
-        background.add(program_label);
-        background.add(semester_label);
-        background.add(batch_label);
-        background.add(tf);
-        background.add(tf1);
-        background.add(tf4);
-        background.add(tf2);
-        background.add(tf3);
-        background.add(back);
-        background.add(submit);
-        background.add(next);
+ */
 
-        add(background) ;
+        add(l1);
+        add(separator) ;
+        add(std_name_label);
+        add(label_Std_ID);
+        add(program_label);
+        add(semester_label);
+        add(batch_label);
+        add(tf);
+        add(tf1);
+        add(tf4);
+        add(tf2);
+        add(tf3);
+        add(back);
+        add(submit);
+        add(next);
+
+        // add(background) ;
 
 
         back.addActionListener(new actions());
@@ -72,7 +75,7 @@ class CreateAccountFrame extends Frame
         next.addActionListener(new actions());
         addWindowListener(new MyWindow());
 
-        l1.setBounds(480 ,50,400,50);
+        l1.setBounds(375 ,50,700,60);
 
         tf.setBounds(650 ,190,250,40); // student Id field
         tf1.setBounds(650 ,260,250,40); // student name field
@@ -83,9 +86,9 @@ class CreateAccountFrame extends Frame
 
 
         label_Std_ID.setBounds(450,155,200,110);
-        std_name_label.setBounds(410,260,200,50);
+        std_name_label.setBounds(420,260,200,50);
         program_label.setBounds(400,290,200,110);
-        semester_label.setBounds(425,360,200,110);
+        semester_label.setBounds(443,360,200,110);
         batch_label.setBounds(410,450,200,50);
 
         back.setBounds(350,600,120,50);
@@ -117,12 +120,12 @@ class CreateAccountFrame extends Frame
         submit.setForeground(Color.WHITE);
         next.setForeground(Color.WHITE);
 
-        l1.setFont(new Font("Serif",Font.BOLD + Font.PLAIN,50));
-        std_name_label.setFont(new Font("Aerial",Font.BOLD,19));
-        label_Std_ID.setFont(new Font("Aerial",Font.BOLD,19));
-        program_label.setFont(new Font("Aerial",Font.BOLD,19));
-        semester_label.setFont(new Font("Arrial",Font.BOLD,19));
-        batch_label.setFont(new Font("Arial",Font.BOLD,19));
+        l1.setFont(new Font("Matura MT Script Capitals",Font.BOLD + Font.PLAIN,30));
+        std_name_label.setFont(new Font("ALLBITS",Font.BOLD,19));
+        label_Std_ID.setFont(new Font("ALLBITS",Font.BOLD,19));
+        program_label.setFont(new Font("ALLBITS",Font.BOLD,19));
+        semester_label.setFont(new Font("ALLBITS",Font.BOLD,19));
+        batch_label.setFont(new Font("ALLBITS",Font.BOLD,19));
         tf.setFont(new Font("Aerial",Font.PLAIN,17));
         tf1.setFont(new Font("Aerial",Font.PLAIN,17));
         tf2.setFont(new Font("Arrial",Font.PLAIN,17));
@@ -132,6 +135,8 @@ class CreateAccountFrame extends Frame
         submit.setFont(new Font("Aerial",Font.BOLD,14));
         next.setFont(new Font("Aerial",Font.BOLD,14));
 
+
+        setBackground(new Color(204, 204, 204));
         setSize(1280,850);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -140,6 +145,7 @@ class CreateAccountFrame extends Frame
 
     private class actions implements ActionListener
     {
+
         public void actionPerformed(ActionEvent ae)
         {
             if(ae.getSource()==back)
@@ -152,21 +158,11 @@ class CreateAccountFrame extends Frame
             {
                 try
                 {
-                    /*
-                    tf.setBounds(650 ,190,250,40); // account ID field
-                    tf1.setBounds(650 ,260,250,40); // student name field
-                    pF.setBounds(650 ,320,250,40); // password field
-                    tf3.setBounds(650 ,390,250,40); // reserve books field
-                    tf2.setBounds(650 ,450,250,40); // student Id field
-
-                     */
-
                     std_ID = tf.getText();
                     std_name = tf1.getText();
                     program = tf4.getText();
                     semester = tf3.getText();
                     batch = tf2.getText();
-
 
 
                     if(std_ID.length()==0 || std_name.length()==0 || program.length()==0 || semester.length()==0 || batch.length()==0)
@@ -199,15 +195,9 @@ class CreateAccountFrame extends Frame
                         }
                     }
 
-                    /*
-                    if(password.length()<8)
-                    {
-                        throw new passwordException();
-                    }
-                    */
-                    JOptionPane.showMessageDialog(null , "Next Button reached you to the Menu");
-                    currentFrame.setEnabled(false);
-                    new PasswordSetting().setVisible(true);
+
+                    JOptionPane.showMessageDialog(null , "Now you press the Submit button ");
+
                 }
                 catch(Exception e)
                 {
@@ -248,7 +238,7 @@ class CreateAccountFrame extends Frame
                         }
                         else if((std_ID.charAt(0)=='-') || (std_ID.charAt(0)=='_') || (std_ID.charAt(std_ID.length()-1)=='-') || (std_ID.charAt(std_ID.length()-1)=='_'))
                         {
-                            throw new IDException();
+                            //throw new IDException();
                         }
                         else
                         {
@@ -256,16 +246,7 @@ class CreateAccountFrame extends Frame
                         }
                     }
 
-                    /*
-                    if(password.length()<8)
-                    {
-                        throw new passwordException();
-                    }
 
-                     */
-
-
-                    
                     try
                     {
                         Class.forName("com.mysql.jdbc.Driver");
@@ -293,23 +274,32 @@ class CreateAccountFrame extends Frame
                         JOptionPane.showMessageDialog(null , "Still Your account is not saved in our Database");
                         // JOptionPane.showMessageDialog(null , e.getMessage());
                     }
-
-                    
-
                 }
-
 
                 catch(Exception e)
                 {
                     JOptionPane.showMessageDialog(null,e);
                 }
 
-                currentFrame.setVisible(false);
-                try {
-                    new PasswordSetting().setVisible(true);
-                } catch (EmptyFieldsException e) {
-                    e.printStackTrace();
+                emptyFields = false;
+                if (emptyFields == false)
+                {
+                    currentFrame.dispose();
+                    try
+                    {
+                        new PasswordSetting();
+                    }
+                    catch (EmptyFieldsException e) {
+                        e.printStackTrace();
+                    }
                 }
+                else
+                {
+                    currentFrame.dispose();
+                    new CreateAccountFrame() ;
+                }
+                // JOptionPane.showMessageDialog(null, "Now Click On Next Button");
+
             }
         }
     }
