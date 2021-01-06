@@ -1,5 +1,7 @@
 package finalProject;
 
+import netscape.javascript.JSException;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -12,51 +14,70 @@ class StudentLogin extends Frame
     JLabel background ;
     ImageIcon icon ;
     StudentLogin currentFrame = this;
-    JLabel lN , lP , l1 ;
-    JTextField tf = new JTextField(20);
+    JLabel lN , lP , l1 , label ;
+    public static JTextField tf = new JTextField(20);
     JButton back = new JButton("BACK"), submit = new JButton("SUBMIT"),next = new JButton("NEXT");
-    final JPasswordField pF = new JPasswordField(20);
+    public static JPasswordField pF = new JPasswordField(20);
     JSeparator separator = new JSeparator() ;
-    String name, ID ,password;
+    public static String name, password;
     boolean done = false;
+    boolean register = true ;
 
 
     public StudentLogin()
     {
 
         setLayout(null);
-        lN = new JLabel("Name :",Label.LEFT);
+        lN = new JLabel("Student Name :",Label.LEFT);
         lP = new JLabel("Password :",Label.LEFT);
-        l1 = new JLabel("LOGIN ACCOUNT");
+        l1 = new JLabel("Student Login Account");
 
+
+
+        JSeparator separator1 = new JSeparator() ;
+        separator1.setBounds(400,530,500,100);
+        separator1.setBackground(Color.BLACK);
+
+        label = new JLabel();
+        label.setText("(: You only Login when you are already Registered in this Library :)");
+        label.setForeground(Color.BLACK);
+        label.setBounds(415,455,800,100);
+        label.setFont(new Font("Aerial",Font.BOLD,14));
+        label.setLayout(null);
+
+        JSeparator separator2 = new JSeparator() ;
+        separator2.setBounds(400,480,500,100);
+        separator2.setBackground(Color.BLACK);
+/*
         // this code is for setting the BackGround.
-        icon = new ImageIcon("H:\\BS (CS) 3\\OOP Th Dr.Sher\\After_Break_Revised_Course\\OOP Project\\Final Project Code with Packaging\\src\\finalProject\\images\\pic2.jpg") ;
+        icon = new ImageIcon("background.jpg") ;
         JLabel background = new JLabel(icon);
         background.setBounds(0 , 0 , 1350,850);
         background.setVisible(true);
 
+ */
 
-        l1.setBounds(480 ,50,500,50);
+        l1.setBounds(390 ,50,800,50);
         tf.setBounds(630 ,300,250,40);
         pF.setBounds(630 ,400,250,40);
-        lN.setBounds(500,300,80,50);
-        lP.setBounds(500,370,110,110);
+        lN.setBounds(420,300,160,50);
+        lP.setBounds(425,370,120,110);
         back.setBounds(350,600,120,50);
         submit.setBounds(650,600,120,50);
         next.setBounds(900,600,120,50);
         separator.setBounds(0, 120 ,1350,50 );
 
 
-        Border border = BorderFactory.createLineBorder(Color.WHITE ,3);
+        Border border = BorderFactory.createLineBorder(Color.BLACK ,3);
 
         back.setBorder(border);
         submit.setBorder(border);
         next.setBorder(border);
 
 
-        l1.setForeground(Color.WHITE);
-        lN.setForeground(Color.WHITE);
-        lP.setForeground(Color.WHITE);
+        l1.setForeground(Color.BLACK);
+        lN.setForeground(Color.BLACK);
+        lP.setForeground(Color.BLACK);
 
 
         back.setBackground(Color.BLACK);
@@ -68,7 +89,7 @@ class StudentLogin extends Frame
         next.setForeground(Color.WHITE);
 
 
-        l1.setFont(new Font("Serif",Font.BOLD + Font.PLAIN,50));
+        l1.setFont(new Font("Matura MT Script Capitals",Font.BOLD + Font.PLAIN,40));
         lN.setFont(new Font("Aerial",Font.BOLD,19));
         lP.setFont(new Font("Aerial",Font.BOLD,19));
         tf.setFont(new Font("Aerial",Font.PLAIN,17));
@@ -78,17 +99,22 @@ class StudentLogin extends Frame
         next.setFont(new Font("Aerial",Font.BOLD,14));
 
 
-        background.add(l1);
-        background.add(separator) ;
-        background.add(lN);
-        background.add(lP);
-        background.add(tf);
-        background.add(pF);
-        background.add(back);
-        background.add(submit);
-        background.add(next);
+        add(l1);
+        add(separator) ;
+        add(lN);
+        add(lP);
+        add(tf);
+        add(pF);
+        add(separator1) ;
+        add(label) ;
+        add(separator2) ;
 
-        add(background) ;
+
+        add(back);
+        add(submit);
+        add(next);
+
+        // add(background) ;
 
 
         back.addActionListener(new actions());
@@ -97,7 +123,7 @@ class StudentLogin extends Frame
         // addWindowListener(new MyWindow());
 
 
-
+        setBackground(new Color(153, 153, 153));
         setSize(1280,850);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -111,16 +137,17 @@ class StudentLogin extends Frame
         {
             if(ae.getSource()==back)
             {
-                currentFrame.setVisible(false);
-                new LMSProject().setVisible(true);
+                currentFrame.dispose();
+                new LMSProject();
             }
 
             else if(ae.getSource()==next)
             {
                 try
                 {
-                    name = tf.getText();
-                    password = new String(pF.getPassword());
+
+                    StudentLogin.name = tf.getText();
+                    StudentLogin.password = new String(pF.getPassword());
 
                     if(name.length()==0 || password.length()==0)
                     {
@@ -146,45 +173,20 @@ class StudentLogin extends Frame
 
                     try
                     {
-                        Class.forName("com.mysql.jdbc.Driver");
+                        JOptionPane.showMessageDialog(null, "Now you press the submit button");
 
-                        // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
-
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
-
-
-                        //    This code is for Inserting record in MySql DataBase
-                        PreparedStatement preparedStatement ;
-                        ResultSet resultSet ;
-
-                        String query = "Select  * from `library_managment_system`.`accounts` WHERE `student_name` = ? AND `password` = ?;" ;
-                        // Statement statement = con.createStatement();
-
-                        preparedStatement = con.prepareStatement(query) ;
-
-                        preparedStatement.setString(1, name);
-                        preparedStatement.setString(2, password);
-
-                        resultSet = preparedStatement.executeQuery();
-
-                        // int count = statement.executeUpdate(query);
-                        if(resultSet.next())
-                        {
-                            JOptionPane.showMessageDialog(null , "Thanks for creating New Account!!! \n Your account saved in our Database");
-                        }
-                        con.close();
                     }
 
                     catch(Exception e)
                     {
-                        JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                        // JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                        JOptionPane.showMessageDialog(null, e.getMessage());
                     }
 
-                    JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
 
-                    // currentFrame.setVisible(false);
-                    // new showMenu1().setVisible(true);
                 }
+
+
                 catch(Exception e)
                 {
                     JOptionPane.showMessageDialog(null,"There is some Problem With Login");
@@ -195,8 +197,8 @@ class StudentLogin extends Frame
             {
                 try
                 {
-                    name = tf.getText();
-                    password = new String(pF.getPassword());
+                    StudentLogin.name = tf.getText();
+                    StudentLogin.password = new String(pF.getPassword());
 
                     if(name.length()==0 || password.length()==0)
                     {
@@ -222,11 +224,12 @@ class StudentLogin extends Frame
 
                     try
                     {
-                        Class.forName("com.mysql.jdbc.Driver");
+
+                        Class.forName("com.mysql.cj.jdbc.Driver");
 
                         // here library_managment_system is MYSQL database name, root is username and maadi192000 is password
 
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_management_system","root","maadi192000");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_managment_system","root","maadi192000");
 
 
                         //    This code is for Inserting record in MySql DataBase
@@ -244,33 +247,48 @@ class StudentLogin extends Frame
                         resultSet = preparedStatement.executeQuery();
 
                         // int count = statement.executeUpdate(query);
-                        if(resultSet.next())
+                        if(resultSet.next()) // true
                         {
                             // All the Next Operation that are after Login we will put Here...
-                            JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
-                            JOptionPane.showMessageDialog(null , "Here We put the code  for Student Profile page ");
-                            // currentFrame.setVisible(false);
-                            // new studentProfile().setVisible(true);
+                            if(register== true)
+                            {
+                                JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
+                                currentFrame.dispose();
+                                StudentLogin.name = tf.getText();
+                                StudentLogin.password = new String(pF.getPassword());
+                                new StudentProfile();
+                            }
+                            // JOptionPane.showMessageDialog(null , "Here We put the code  for Student Profile page ");
                         }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null , "You are not Registered in this Library. \n Please First Register Yourself!!");
+                            register = false ;
+                            currentFrame.dispose();
+                            new StudentLogin() ;
+                        }
+
                         con.close();
+
                     }
 
                     catch(Exception e)
                     {
                         JOptionPane.showMessageDialog(null, "This exception is in JDBC Connection.");
+                        JOptionPane.showMessageDialog(null, e);
                     }
-
-                    // JOptionPane.showMessageDialog(null , "Thank You for Loging In :)");
 
                 }
 
                 catch(Exception e)
                 {
                     JOptionPane.showMessageDialog(null,"There is a problem in Login.");
+                    JOptionPane.showMessageDialog(null,e.getMessage());
                 }
             }
         }
     }
 }
+
 
 
